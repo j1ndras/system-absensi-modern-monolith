@@ -8,22 +8,22 @@ import { Link, useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import Selectbox from '@/Components/Selectbox';
 
-export default function UserCreate({ auth }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
-        name: "",
-        email: "",
+export default function UserEdit({ user, auth }) {
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        name: user.name,
+        email: user.email,
         password: "",
         password_confirmation: "",
-        role: "user",
+        role: user.role,
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('users.store'), {
+        patch(route('users.update', user.id), {
             preserveScroll: true,
             onSuccess: () => {
-                alert("User created");
+                alert("User updated");
             },
             onError: (errors) => {
                 console.log(errors);
@@ -44,10 +44,10 @@ export default function UserCreate({ auth }) {
                         <div className="p-6 text-gray-900">
                             <section className="max-w-xl">
                                 <header>
-                                    <h2 className="text-lg font-medium text-gray-900">Create User</h2>
+                                    <h2 className="text-lg font-medium text-gray-900">Edit User</h2>
 
                                     <p className="mt-1 text-sm text-gray-600">
-                                        Create a New User.
+                                        Edit User Details.
                                     </p>
                                 </header>
 
